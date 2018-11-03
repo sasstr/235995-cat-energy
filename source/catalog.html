@@ -2,7 +2,10 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>HTML Academy: Кэт энерджи Каталог</title>
+  <link rel="preload" crossorigin type="font/woff2" href="fonts/oswaldmedium.woff2" as="font">
+  <link rel="preload" crossorigin type="font/woff2" href="fonts/oswaldregular.woff2" as="font">
   <!-- Pixel Glass
   Кэт энерджи: 320px — мобильная версия, 768px — планшетная версия, 1300px — десктопная версия.
 
@@ -36,6 +39,10 @@
   <script src="../node_modules/pixel-glass/script.js"></script>
    // Pixel Glass -->
   <link rel="stylesheet" href="css/style.min.css">
+  <script>
+    document.createElement( "picture" );
+  </script>
+  <script src="js/picturefill.js" async></script>
 </head>
 <body>
   <div class="include-sprite">
@@ -53,15 +60,15 @@
       <button type="button" class="main-nav__toggle main-nav__toggle--nojs">
         <span class="visually-hidden">Открыть меню</span>
       </button>
-      <ul>
-        <li>
-          <a href="index.html">Главная</a>
+      <ul class="main-nav__menu  main-nav__menu--open main-nav__menu--nojs">
+        <li class="main-nav__item">
+          <a class="main-nav__link" href="index.html">Главная</a>
         </li>
-        <li>
+        <li class="main-nav__item">
           Каталог продукции
         </li>
-        <li>
-          <a href="form.html">Подбор программы</a>
+        <li class="main-nav__item">
+          <a class="main-nav__link" href="form.html">Подбор программы</a>
         </li>
       </ul>
     </nav>

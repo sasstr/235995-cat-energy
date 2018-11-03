@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,eAAgB;EACd,OAAO,EAAE,IAAI",
-"sources": ["include-sprite.scss"],
-"names": [],
-"file": "include-sprite.css"
-}

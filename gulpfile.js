@@ -18,20 +18,27 @@ var uglify = require("gulp-uglify"); // сжимает JS минифицируе
 var pump = require('pump'); //помогает uglify работать без ошибок
 var htmlmin = require("gulp-htmlmin"); // сжимает html минифицирует
 var sourcemaps = require("gulp-sourcemaps"); // добавим карты CSS блоков
+var debug = require("gulp-debug"); // что бы понимать что делает какждый pipe
 
 gulp.task("css", function () {
   return gulp.src("source/sass/style.scss")
+    .pipe(debug({ title: 'src'}))
     .pipe(plumber())
     .pipe(sourcemaps.init()) // запускаем sourcemaps
     .pipe(sass())
+    .pipe(debug({ title: 'sass'}))
     .pipe(postcss([
       autoprefixer()   // расставляем автопрефиксы
     ]))
     .pipe(gulp.dest("build/css"))
+    .pipe(debug({ title: 'dest'}))
     .pipe(csso())  // минифицируем CSS
     .pipe(rename("style.min.css")) // меняем имя файла на style.min.css в разметке указать его
-    .pipe(sourcemaps.write("."))  // записываем карту в отдельный файл .write(".")
+    .pipe(debug({ title: 'min.css'}))
+    .pipe(sourcemaps.write('source/css', {addComment: false})) //  записываем карту в отдельный файл .write(".")
+    .pipe(debug({ title: 'sourcemaps.write'}))
     .pipe(gulp.dest("build/css"))
+    .pipe(debug({ title: 'dest'}))
     .pipe(server.stream());
 });
 
@@ -115,7 +122,7 @@ gulp.task("server", function () {  // отслеживаем изменения 
     server: "build/",
   });
 
-  gulp.watch("source/js/main.js", gulp.series("js", "refresh"));
+  gulp.watch("source/js/**/*", gulp.series("js", "refresh"));
   gulp.watch("source/sass/**/*.{scss,sass}", gulp.series("css"));
   gulp.watch("source/img/icon-*.svg", gulp.series("sprite", "html", "refresh"));
   gulp.watch("source/*.html", gulp.series("html", "refresh"));
