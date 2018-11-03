@@ -127,3 +127,7 @@ gulp.task("refresh", function (done){
 });
 
 gulp.task("start", gulp.series("build", "server"));
+
+//  gulp.task('Название текущего таска',
+//  ['зависимая задача/та которая будет выполняться перед текущим таском'],
+//  function() {})

@@ -40,3 +40,36 @@ git checkout -b module2-task1
 #### Есть вопрос?
 
 Посмотрите [коллекцию часто задаваемых вопросов по Git](http://firstaidgit.ru).
+
+ <!-- Pixel Glass
+  Кэт энерджи: 320px — мобильная версия, 768px — планшетная версия, 1300px — десктопная версия.
+  -->
+  <style>
+    HTML {
+      background-repeat: no-repeat;
+      background-position: 50% 0;
+      /* По умолчанию мобильный макет */
+      background-image: url("img/makets/cat-energy-index-mobile.jpg");
+    }
+    /* Планшет */
+    @media (min-width: 768px) {
+      HTML {
+        /* Планшетный макет */
+        background-image: url("img/makets/cat-energy-index-tablet.jpg");
+      }
+    }
+    /* Десктоп */
+    @media ( min-width: 1300px) {
+      HTML {
+        /* Десктопный макет */
+        background-image: url("img/makets/cat-energy-index-desktop.jpg");
+      }
+    }
+
+    body {
+      opacity: 0.5;
+    }
+  </style>
+  <link rel="stylesheet" href="../node_modules/pixel-glass/styles.css">
+  <script src="../node_modules/pixel-glass/script.js"></script>
+  <!-- // Pixel Glass -->
