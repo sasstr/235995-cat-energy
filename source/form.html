@@ -64,8 +64,55 @@
       </ul>
     </nav>
   </header>
-  <main>
+  <main class="main-page main-page--inner">
+    <h1 class="main-page__headline">Подбор программы</h1>
+    <form class="main-page__form form" action="echo.htmlacademy.ru">
+      <div class="form__wrapper">
+      <h3 class="form__title">Заполните анкету и мы подберем программу для вашего кота</h3>
 
+        <label class="form__text" for="cat-name">Имя:*</label>
+        <input class="form__value" type="text" name="cat-name" id="cat-name">
+        <label class="form__text" for="cat-weight">Вес (кг):*</label>
+        <input class="form__value" type="text" name="cat-weight" id="cat-weight">
+        <label class="form__text" for="cat-age">Возраст (Лет)</label>
+        <input class="form__value" type="text" name="cat-age" id="cat-age">
+      </div>
+      <div class="form__wrapper">
+        <input class="visually-hidden" type="radio" name="programm" id="lose-weight" checked> <!-- class="visually-hidden"-->
+        <label  class="form__radio form__radio--active" for="lose-weight">Похудение</label>
+        <input class="visually-hidden" type="radio" name="programm" id="get-fat"> <!-- class="visually-hidden"-->
+        <label class="form__radio" for="get-fat">Набор массы</label>
+        <input class="visually-hidden" type="radio" name="programm" id="get-advise"> <!-- class="visually-hidden"-->
+        <label class="form__radio" for="get-advise">Не знаю (Нужен ваш совет)</label>
+      </div>
+      <div class="form__wrapper">
+        <h3 class="form__title form__title--decor">Контактные данные (владельца кота)</h3>
+
+        <label class="form__text form__text--email" for="email">E-mail:*</label>
+        <input class="form__contacts-data" type="email" name="email" id="email">
+        <label class="form__text form__text--phone" for="phone">Телефон:*</label>
+        <input class="form__contacts-data" type="tel" name="phone" id="phone">
+      </div>
+      <div class="form__wrapper">
+      <h3 class="form__title form__title--decor">Комментарий</h3>
+
+      <textarea class="form__comments" name="comments" id="comments" cols="30" rows="10" placeholder="Расскажите обо всех повадках кота"></textarea>
+      </div>
+      <div class="form__wrapper">
+        <h3 class="form__title form__title--decor">Дополнительно</h3>
+        <input class="visually-hidden" type="checkbox" name="sweetener" id="sweetener" checked><!-- class="visually-hidden" -->
+        <label class="form__checkbox form__checkbox--active" for="sweetener">Сахаразаменитель</label>
+        <input class="visually-hidden" type="checkbox" name="drinking-water" id="drinking-water"><!-- class="visually-hidden"-->
+        <label class="form__checkbox" for="drinking-water">Питьевая вода</label>
+        <input class="visually-hidden" type="checkbox" name="milk" id="milk"><!-- class="visually-hidden"-->
+        <label class="form__checkbox" for="milk">Молоко</label>
+        <input class="visually-hidden" type="checkbox" name="vitamins" id="vitamins"><!-- class="visually-hidden"-->
+        <label class="form__checkbox" for="vitamins">Витамины</label>
+
+        <button class="form__button-form-submit" type="submit">Отправить заявку</button>
+        <span class="form__description">*-Обязательные поля</span>
+      </div>
+    </form>
   </main>
   <footer class="footer">
     <h3 class="footer__title">Приглашаем к сотрудничеству дилеров!</h3>
