@@ -1,4 +1,4 @@
-/* "use strict"; */
+ "use strict";
 
 var gulp = require("gulp");
 var sass = require("gulp-sass");
@@ -15,47 +15,48 @@ var posthtml = require("gulp-posthtml");  // позволяет подключи
 var include = require("posthtml-include");// вставляем в разметку SVG спрайт с помощью тега include
 var del = require("del"); // удаляем папку build перед новой сборкой
 var uglify = require("gulp-uglify"); // сжимает JS минифицирует
-var pump = require('pump'); //помогает uglify работать без ошибок
+var pump = require("pump"); //помогает uglify работать без ошибок
 var htmlmin = require("gulp-htmlmin"); // сжимает html минифицирует
 var sourcemaps = require("gulp-sourcemaps"); // добавим карты CSS блоков
 var debug = require("gulp-debug"); // что бы понимать что делает какждый pipe
 
 gulp.task("css", function () {
-  return gulp.src("source/sass/style.scss")
-    .pipe(debug({ title: 'src'}))
-    .pipe(plumber())
-    .pipe(sourcemaps.init()) // запускаем sourcemaps
+  return gulp.src("source/sass/style.scss", { sourcemaps: true })
+    .pipe(debug({ title: "source sass"}))
+    .pipe(plumber())     //.pipe(sourcemaps.init()) // запускаем sourcemaps
     .pipe(sass())
-    .pipe(debug({ title: 'sass'}))
+    .pipe(debug({ title: "sass"})) // тут записывается файл source/sass/style.css ??
     .pipe(postcss([
-      autoprefixer()   // расставляем автопрефиксы
+      autoprefixer()     // расставляем автопрефиксы
     ]))
+    .pipe(debug({ title: "postcss"}))
     .pipe(gulp.dest("build/css"))
-    .pipe(debug({ title: 'dest'}))
+    .pipe(debug({ title: "dest"}))
     .pipe(csso())  // минифицируем CSS
+    .pipe(debug({ title: "csso"}))
     .pipe(rename("style.min.css")) // меняем имя файла на style.min.css в разметке указать его
-    .pipe(debug({ title: 'min.css'}))
-    .pipe(sourcemaps.write('source/css', {addComment: false})) //  записываем карту в отдельный файл .write(".")
-    .pipe(debug({ title: 'sourcemaps.write'}))
-    .pipe(gulp.dest("build/css"))
-    .pipe(debug({ title: 'dest'}))
+    .pipe(debug({ title: "min.css"}))
+    //.pipe(sourcemaps.write("../css/maps")) //  записываем карту в отдельный файл .write(".")
+    //.pipe(debug({ title: "sourcemaps.write"}))
+    .pipe(gulp.dest("build/css", { sourcemaps: "./maps" }))
+    .pipe(debug({ title: "dest sourcemaps"}))
     .pipe(server.stream());
 });
 
-gulp.task('js', function (cb) {
+gulp.task("js", function (cb) {
   pump([
-      gulp.src('source/js/*.js'),
+      gulp.src("source/js/*.js"),
       uglify(),
-      gulp.dest('build/js')
+      gulp.dest("build/js")
     ],
     cb
   );
 });
 
-gulp.task('minify', function() {
-  return gulp.src('build/*.html')
+gulp.task("minify", function() {
+  return gulp.src("build/*.html")
     .pipe(htmlmin({ collapseWhitespace: true }))
-    .pipe(gulp.dest('build'));
+    .pipe(gulp.dest("build"));
 });
 
 gulp.task("images", function() {  // сжимаем картинки можно делать паралельно !
@@ -113,8 +114,8 @@ gulp.task("build", gulp.series(  // собираем проект запуска
   "css",
   "sprite",
   "html",
-  'minify',
-  'js'
+  "minify",
+  "js"
 ));
 
 gulp.task("server", function () {  // отслеживаем изменения в файлах и пересобираем проект
@@ -123,7 +124,7 @@ gulp.task("server", function () {  // отслеживаем изменения 
   });
 
   gulp.watch("source/js/**/*", gulp.series("js", "refresh"));
-  gulp.watch("source/sass/**/*.{scss,sass}", gulp.series("css"));
+  gulp.watch("source/sass/**/*.{scss,sass}", gulp.series("css", "refresh"));
   gulp.watch("source/img/icon-*.svg", gulp.series("sprite", "html", "refresh"));
   gulp.watch("source/*.html", gulp.series("html", "refresh"));
 });
@@ -134,7 +135,3 @@ gulp.task("refresh", function (done){
 });
 
 gulp.task("start", gulp.series("build", "server"));
-
-//  gulp.task('Название текущего таска',
-//  ['зависимая задача/та которая будет выполняться перед текущим таском'],
-//  function() {})
