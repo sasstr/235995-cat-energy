@@ -1,0 +1,34 @@
+.main-nav {
+  width: 320px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.header-nav__img {
+  height: 100%;
+}
+
+.main-nav__picture {
+  max-width: 191px;
+}
+
+.main-nav__logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 11px;
+}
+
+.main-nav__toggle {
+  display: block;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+
+  border: none;
+  background-color: #ffffff;
+  background-repeat: no-repeat;
+  background-image: url("../img/icon-close.svg");
+  background-size: 18px 18px;
+}

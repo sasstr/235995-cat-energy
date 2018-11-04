@@ -1,52 +1,34 @@
  "use strict";
 
-var gulp = require("gulp");
-var sass = require("gulp-sass");
-var plumber = require("gulp-plumber");  // не прерывает работу вотчера елси есть ошибки сборки
-var postcss = require("gulp-postcss");  // позволяет подключить автопрефиксер
-var autoprefixer = require("autoprefixer");  // раставляем вендорные префиксы
-var server = require("browser-sync").create();
-var csso = require("gulp-csso");  // минифицируем CSS
-var rename = require("gulp-rename"); // используем что бы переименовать файл
-var imagemin = require("gulp-imagemin"); // сжимает jpeg png gif svg
-var webp = require("gulp-webp"); // png jpg конвертим в webp
-var svgstore = require("gulp-svgstore"); // создаем svg спрайт
-var posthtml = require("gulp-posthtml");  // позволяет подключить posthtml-include
-var include = require("posthtml-include");// вставляем в разметку SVG спрайт с помощью тега include
-var del = require("del"); // удаляем папку build перед новой сборкой
-var uglify = require("gulp-uglify"); // сжимает JS минифицирует
-var pump = require("pump"); //помогает uglify работать без ошибок
-var htmlmin = require("gulp-htmlmin"); // сжимает html минифицирует
-var sourcemaps = require("gulp-sourcemaps"); // добавим карты CSS блоков
-var debug = require("gulp-debug"); // что бы понимать что делает какждый pipe
+var  gulp = require('gulp'),
+   gp = require('gulp-load-plugins')(), // подключаем все плагины которые начинаются на gulp- ...
+   del = require("del"), // удаляем папку build перед новой сборкой
+   pump = require("pump"), //помогает uglify работать без ошибок
+   include = require("posthtml-include"),// вставляем в разметку SVG спрайт с помощью тега include
+   server = require("browser-sync").create(), // запускаем локальный серевер
+   autoprefixer = require("autoprefixer");  // раставляем вендорные префиксы
+
 
 gulp.task("css", function () {
-  return gulp.src("source/sass/style.scss", { sourcemaps: true })
-    .pipe(debug({ title: "source sass"}))
-    .pipe(plumber())     //.pipe(sourcemaps.init()) // запускаем sourcemaps
-    .pipe(sass())
-    .pipe(debug({ title: "sass"})) // тут записывается файл source/sass/style.css ??
-    .pipe(postcss([
+  return gulp.src("source/sass/style.scss")
+    .pipe(gp.plumber())
+    .pipe(gp.sourcemaps.init())
+    .pipe(gp.sass())
+    .pipe(gp.postcss([
       autoprefixer()     // расставляем автопрефиксы
     ]))
-    .pipe(debug({ title: "postcss"}))
+    //.pipe(gulp.dest("build/css"))
+    .pipe(gp.csso())  // минифицируем CSS
+    .pipe(gp.rename("style.min.css")) // меняем имя файла на style.min.css в разметке указать его
+    .pipe(gp.sourcemaps.write('./maps'))
     .pipe(gulp.dest("build/css"))
-    .pipe(debug({ title: "dest"}))
-    .pipe(csso())  // минифицируем CSS
-    .pipe(debug({ title: "csso"}))
-    .pipe(rename("style.min.css")) // меняем имя файла на style.min.css в разметке указать его
-    .pipe(debug({ title: "min.css"}))
-    //.pipe(sourcemaps.write("../css/maps")) //  записываем карту в отдельный файл .write(".")
-    //.pipe(debug({ title: "sourcemaps.write"}))
-    .pipe(gulp.dest("build/css", { sourcemaps: "./maps" }))
-    .pipe(debug({ title: "dest sourcemaps"}))
     .pipe(server.stream());
 });
 
 gulp.task("js", function (cb) {
   pump([
       gulp.src("source/js/*.js"),
-      uglify(),
+      gp.uglify(),
       gulp.dest("build/js")
     ],
     cb
@@ -55,38 +37,38 @@ gulp.task("js", function (cb) {
 
 gulp.task("minify", function() {
   return gulp.src("build/*.html")
-    .pipe(htmlmin({ collapseWhitespace: true }))
+    .pipe(gp.htmlmin({ collapseWhitespace: true }))
     .pipe(gulp.dest("build"));
 });
 
 gulp.task("images", function() {  // сжимаем картинки можно делать паралельно !
   return gulp.src("source/img/**/*.{png,jpg,svg}")
     .pipe(imagemin([
-      imagemin.optipng({optimizationLevel: 3}),
-      imagemin.jpegtran({progressive: true}),
-      imagemin.svgo()
+      gp.imagemin.optipng({optimizationLevel: 3}),
+      gp.imagemin.jpegtran({progressive: true}),
+      gp.imagemin.svgo()
     ]))
     .pipe(gulp.dest("source/img"));
 });
 
 gulp.task("webp", function() {  // конвертируем изобрежиня в webp формат
   return gulp.src("source/img/**/*.{png,jpg}")
-    .pipe(webp({quality: 90}))
+    .pipe(gp.webp({quality: 90}))
     .pipe(gulp.dest("source/img"));
 });
 
 gulp.task("sprite", function () { // создаем svg спрайт
   return gulp.src("source/img/icon-*.svg")
-    .pipe(svgstore({
+    .pipe(gp.svgstore({
       inlineSvg: true
     }))
-    .pipe(rename("sprite.svg"))
+    .pipe(gp.rename("sprite.svg"))
     .pipe(gulp.dest("build/img"));
 });
 
 gulp.task("html", function () {  // вставляем svg спрайт в разметку
   return gulp.src("source/*.html")
-    .pipe(posthtml([
+    .pipe(gp.posthtml([
       include()
     ]))
     .pipe(gulp.dest("build"));
@@ -124,7 +106,7 @@ gulp.task("server", function () {  // отслеживаем изменения 
   });
 
   gulp.watch("source/js/**/*", gulp.series("js", "refresh"));
-  gulp.watch("source/sass/**/*.{scss,sass}", gulp.series("css", "refresh"));
+  gulp.watch("source/sass/**/*.{scss,sass}", gulp.series("css"));
   gulp.watch("source/img/icon-*.svg", gulp.series("sprite", "html", "refresh"));
   gulp.watch("source/*.html", gulp.series("html", "refresh"));
 });
