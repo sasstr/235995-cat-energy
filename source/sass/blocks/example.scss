@@ -1,0 +1,139 @@
+.example {
+  background-color: #f2f2f2;
+}
+
+.example__wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  padding: 33px 20px 38px;
+  margin: 0 auto;
+}
+
+.example__headline {
+  padding: 0;
+  margin: 0 0 33px 0;
+
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 60px;
+  color: #111111;
+}
+
+.example__content {
+  padding: 0;
+  margin: 0 0 27px 0;
+
+  color: #444444;
+  font-family: "Arial", "Helvetica", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.example__block {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 38px;
+}
+
+.example__result {
+  position: relative;
+
+  min-width: 124px;
+  padding: 17px 10px;
+
+  text-align: center;
+
+  border-radius: 3px;
+  border: 1px solid #cdcdcd;
+}
+
+.example__result-value {
+  display: block;
+
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #111111;
+  text-transform: uppercase;
+}
+
+.example__result-content {
+  position: absolute;
+  top: 45px;
+  left: 18px;
+
+  display: block;
+  width: 87px;
+  padding: 0 16px;
+
+  background-color: #f2f2f2;
+}
+
+.example__title {
+  padding: 0;
+  margin: 0;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: center;
+  color: #111111;
+  text-transform: uppercase;
+}
+
+.example_compare {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 320px;
+}
+
+.example__block-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 200px;
+  margin: 0 auto;
+}
+
+.example__btn {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #111111;
+  text-transform: uppercase;
+
+  background-color: transparent;
+  border: none;
+}
+
+.example__bar {
+  display: block;
+  width: 84px;
+  height: 16px;
+  padding: 4px 0 4px 6px;
+  margin: 0;
+
+  border-radius: 6px;
+  border: 1px solid #cdcdcd;
+  background-color: #ffffff;
+}
+
+.example__bar-level {
+  width: 35px;
+  height: 6px;
+  border-radius: 3px;
+  background-color: #68b738;
+}
+
+.example__img-block {
+  position: relative;
+}
+
+.examle__picture--before {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

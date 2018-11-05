@@ -1,0 +1,19 @@
+.social {
+  width: 320px;
+  padding: 23px 93px 23px 102px;
+  margin: 0 auto;
+
+  border-bottom: 1px solid #dadada;
+  border-top: 1px solid #dadada;
+}
+
+.social__list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  min-width: 125px;
+
+  @include reset-list;
+  margin: 0 auto;
+}

@@ -17,7 +17,7 @@ gulp.task("css", function () {
     .pipe(gp.postcss([
       autoprefixer()     // расставляем автопрефиксы
     ]))
-    //.pipe(gulp.dest("build/css"))
+    .pipe(gulp.dest("build/css"))
     .pipe(gp.csso())  // минифицируем CSS
     .pipe(gp.rename("style.min.css")) // меняем имя файла на style.min.css в разметке указать его
     .pipe(gp.sourcemaps.write('./maps'))
